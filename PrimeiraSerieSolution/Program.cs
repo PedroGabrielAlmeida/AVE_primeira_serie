@@ -16,7 +16,8 @@ namespace PrimeiraSerieSolution
             {
                 Console.WriteLine("Lista tem #{0} elementos", lista.Count);
             }
-
+            Console.WriteLine("Press any key to continue ...");
+            Console.ReadKey();
         }
     }
 }
