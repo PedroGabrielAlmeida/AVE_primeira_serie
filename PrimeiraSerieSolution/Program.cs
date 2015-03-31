@@ -10,6 +10,13 @@ namespace PrimeiraSerieSolution
     {
         static void Main(string[] args)
         {
+
+            List<IArrayOperation> lista = XLoader.Load("AddValue");
+            if (lista.Count > 0)
+            {
+                Console.WriteLine("Lista tem #{0} elementos", lista.Count);
+            }
+
         }
     }
 }
