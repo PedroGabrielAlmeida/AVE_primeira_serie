@@ -20,18 +20,18 @@ namespace PrimeiraSerieSolution
             _allOps = new List<IArrayOperation>();
         }
 
-        public static List<IArrayOperation> Load(String assemblySimpleName)
+        //public static List<IArrayOperation> Load(String assemblySimpleName)
+        public static List<IArrayOperation> Load(params String[] assemblySimpleName)
         {
-            Assembly assembly = Assembly.Load(assemblySimpleName);
-            foreach (Type eachType in assembly.GetTypes())
+            Assembly assembly = Assembly.Load(assemblySimpleName[0]); //Hardcoded yet =s
+            Type[] types = assembly.GetTypes();
+            for(int i = 1; i < types.Length; i += 2)
             {
-                //verificacao pode ser feita de outra forma..
-                /*if (eachType)
-                //if (obj is IArrayOperation)
+                Object obj = Activator.CreateInstance(types[i], null);
+                if(typeof(IArrayOperation).IsSubclassOf(obj.GetType()))
                 {
-                    var obj = Activator.CreateInstance(eachType, null);
-                    Instance._allOps.Add((IArrayOperation) obj);
-                }*/
+                    Instance._allOps.Add((IArrayOperation)obj);
+                }
             }
             return Instance._allOps;
         }
