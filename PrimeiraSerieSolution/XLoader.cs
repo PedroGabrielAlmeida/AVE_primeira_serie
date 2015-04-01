@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace PrimeiraSerieSolution
@@ -23,14 +22,20 @@ namespace PrimeiraSerieSolution
         //public static List<IArrayOperation> Load(String assemblySimpleName)
         public static List<IArrayOperation> Load(params String[] assemblySimpleName)
         {
-            Assembly assembly = Assembly.Load(assemblySimpleName[0]); //Hardcoded yet =s
-            Type[] types = assembly.GetTypes();
-            for(int i = 1; i < types.Length; i += 2)
+            foreach (string assemblyName in assemblySimpleName)
             {
-                Object obj = Activator.CreateInstance(types[i], null);
-                if(typeof(IArrayOperation).IsSubclassOf(obj.GetType()))
+                //Load the assembly
+                Assembly assembly = Assembly.Load(assemblyName);
+                //for each type check if it implements the IArrayOperation interface..
+                Type[] types = assembly.GetTypes();
+                foreach (Type type in types)
                 {
-                    Instance._allOps.Add((IArrayOperation)obj);
+                    if (typeof (IArrayOperation).IsAssignableFrom(type))
+                    {
+                        //if so, create an instance in order to add the new operation to the list
+                        Object obj = Activator.CreateInstance(type, null); //TODO  !!!! este ctor não vai funcionar para todos os assemblies
+                        Instance._allOps.Add((IArrayOperation)obj);
+                    }
                 }
             }
             return Instance._allOps;
