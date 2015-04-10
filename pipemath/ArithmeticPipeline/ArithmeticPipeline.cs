@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PipeMath
 {
     public sealed class ArithmeticPipeline
     {
         private readonly List<IArrayOperation> _ops;
-
+        
         public ArithmeticPipeline()
         {
             _ops = new List<IArrayOperation>();
@@ -34,15 +30,13 @@ namespace PipeMath
         ///<summary> Retorna um novo ArithmeticPipeline com as operações obtidas a partir de loader.</summary>
         public static ArithmeticPipeline LoadPipeline(Loader loader)
         {
+
             return new ArithmeticPipeline(loader.LoadOperations());
         }
 
         public int Count
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _ops.Count; }
         }
     }
 

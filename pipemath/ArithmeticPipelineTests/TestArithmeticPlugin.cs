@@ -22,7 +22,7 @@ namespace UnitTestsPipeMath
         public static void DestroyAssemblyFiles()
         {
             File.Delete(DynamicTypesUtils.assemblyFileNameTypes);
-            File.Delete(DynamicTypesUtils.assemblyFileNameMethods);
+            //File.Delete(DynamicTypesUtils.assemblyFileNameMethods);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace UnitTestsPipeMath
         [TestMethod]
         public void Test_Two_Types_Add_Mul()
         {
-            Loader loader = new LoaderOfTypes(DynamicTypesUtils.assemblyFileNameTypes);// NOT WORKING + ".dll");
+            Loader loader = new LoaderOfTypes(DynamicTypesUtils.assemblyFileNameTypes);// + ".dll");
             ArithmeticPipeline pipeline = ArithmeticPipeline.LoadPipeline(loader);
 
             double[] start = new double[] { 2.0 };
@@ -48,7 +48,7 @@ namespace UnitTestsPipeMath
         [TestMethod]
         public void Test_Loader_Of_Methods()
         {
-            Loader loader = new LoaderOfMethods(DynamicTypesUtils.assemblyFileNameMethods + ".dll");
+            Loader loader = new LoaderOfMethods(DynamicTypesUtils.assemblyFileNameMethods);// + ".dll");
             ArithmeticPipeline pipeline = ArithmeticPipeline.LoadPipeline(loader);
             
             Assert.AreEqual(3, pipeline.Count);
@@ -57,7 +57,7 @@ namespace UnitTestsPipeMath
         [TestMethod]
         public void Test_Three_Methods_Add_Mul_Mul()
         {
-            Loader loader = new LoaderOfMethods(DynamicTypesUtils.assemblyFileNameMethods + ".dll");
+            Loader loader = new LoaderOfMethods(DynamicTypesUtils.assemblyFileNameMethods);// + ".dll");
             ArithmeticPipeline pipeline = ArithmeticPipeline.LoadPipeline(loader);
 
             double[] start = new double[] { 2.0 };

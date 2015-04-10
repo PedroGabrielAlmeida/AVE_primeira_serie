@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,13 +27,12 @@ namespace PipeMath
         {
             _allOps = new List<IArrayOperation>();
             Assembly assembly = Assembly.Load(file);
-            //for each type check if it implements the IArrayOperation interface..
+            
             Type[] types = assembly.GetTypes();
             foreach (Type type in types)
             {
                 if (typeof(IArrayOperation).IsAssignableFrom(type))
                 {
-                    //if so, create an instance in order to add the new operation to the list
                     Object obj = Activator.CreateInstance(type, null); 
                     _allOps.Add((IArrayOperation)obj);
                 }
@@ -42,14 +42,27 @@ namespace PipeMath
 
     public class LoaderOfMethods : Loader
     {
+        private readonly List<IArrayOperation> _allOps;
+
         public LoaderOfMethods(String file)
         {
-            throw new NotImplementedException();
+            _allOps = new List<IArrayOperation>();
+            Assembly assembly = Assembly.Load(file);
+            
+            Type[] types = assembly.GetTypes();
+            foreach (Type type in types)
+            {
+                MethodInfo[] methodInfos = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+                foreach (var methodInfo in methodInfos)
+                {
+                    //...
+                }
+            }
         }
 
         public List<IArrayOperation> LoadOperations()
         {
-            throw new NotImplementedException();
+            return _allOps;
         }
     }
 
